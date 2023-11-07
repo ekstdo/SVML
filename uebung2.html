@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <section>
+                        Lösung 2.1
+                    </section>
+                </section>
+                <script src="js/add_video_slide.js" slide_scene="Slide21"></script>
+                <script src="js/add_video_slide.js" slide_scene="Slide212"></script>
+                <section>
+                    <h2>Lösung 2.1.3</h2>
+                    <div style="display: flex">
+                        <div>
+                            Polarkoordinaten:
+
+                            <ul>
+                                <li>für Multiplikation, Division</li>
+                                <li>Beträge / Abstände</li>
+                                <li>Berechnungen mit Richtungen</li>
+                            </ul>
+                        </div>
+                        <div>
+                            Kartesische Koordinaten:
+
+                            <li>direktes Arbeiten mit den Komponenten</li>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    Lösung 2.2
+                </section>
+                <script src="js/add_video_slide.js" slide_scene="Slide221"></script>
+                <script src="js/add_video_slide.js" slide_scene="Slide222"></script>
+                <section>
+                    Lösung 2.3
+                </section>
+				<section>
+					<span class="fragment">\[i = e^{i \frac \pi 2}\]</span>
+					<span class="fragment">\[i^n = \left(e^{i \frac \pi 2}\right)^n = e^{i \frac{n \pi} 2} \]</span>
+					<span class="fragment">\[r = 1, \varphi = \frac{n \pi} 2\]</span>
+					<span class="fragment">\[e^{i \frac{n \pi} 2} = \cos\left(\frac{n \pi} 2\right) + i \sin\left(\frac{n \pi} 2\right)\]</span>
+					<span class="fragment">\[x = \cos\left(\frac{n \pi} 2\right), y = \sin\left(\frac{n \pi} 2\right)\]</span>
+				</section>
+                <script src="js/add_video_slide.js" slide_scene="Slide231"></script>
+				<section>
+					<div style="display: flex; align-items: baseline">\[\frac 2 {1 - \sqrt 3 i} = \frac {2 (1 + \sqrt 3 i )}{(1 + \sqrt 3 i ) (1 - \sqrt 3 i)}\]<span class="fragment" data-fragment-index="4">\[= e^{i \frac \pi 3}\]</span></div>
+					<span class="fragment fade-in-then-semi-out" data-fragment-index="1">\[= \frac{2 + 2 \sqrt 3 i}{1 + 3} = \underbrace{\frac 1 2}_x + i \underbrace{\frac 1 2 \sqrt 3}_y\]</span>
+					<span class="fragment" data-fragment-index="2">\[\varphi = acos\left(\frac 1 2\right) = \frac \pi 3, r = \sqrt{\left(\frac 1 2\right)^2 + \left(\frac{\sqrt 3} 2\right)^2} = 1\]</span>
+					
+				</section>
+				<section>
+					\[\left(\frac 2 {1 - \sqrt 3 i} \right)^n \stackrel {2.3.2}= \left(e^{i \frac \pi 3}\right)^n = e^{i n \frac \pi 3} \]
+					\[= \underbrace{\cos\left(n \frac \pi 3\right)}_x + i \underbrace{\sin\left(n \frac \pi 3 \right)}_y \]
+				</section>
+                <script src="js/add_video_slide.js" slide_scene="Slide233"></script>
+                <script src="js/add_video_slide.js" slide_scene="Slide234"></script>
+				<section>Lösung 2.4</section>
+
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code style="white-space: pre-wrap" class="hlpy" data-trim data-line-numbers="1-3|5-11">
+# empfohlene imports
+import numpy as np
+import cv2
+
+# Implementieren Sie die Funktion CoordZuZahl, die einer Pixel-Koordinate eine
+# komplexe Zahl zuweist
+def CoordZuZahl(CoordX, CoordY, bildgroesse, grenzen_reell, grenzen_im):
+
+	# Sie sind dran!
+	
+    return complex(Re, Im)
+
+# Weisen Sie jeder Pixel-Koordinate im Mandelbrot-Bild eine komplexe Zahl zu und
+# überprüfen Sie, ob diese Zahl divergiert.
+def mandelbrot(groesse=[200, 150],
+               grenzen_reell=(-2., 1.),
+               grenzen_im=(-1.1, 1.1),
+               pruef_iterationen=50):
+    ergebnis = np.zeros(groesse[::-1]+[3], dtype='uint8')
+	
+	# Sie sind dran!
+	
+    return ergebnis
+
+cv2.imshow("Mandelbrot Menge", mandelbrot([200, 150]))
+cv2.waitKey()
+cv2.destroyAllWindows()					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code style="white-space: pre-wrap" class="hlpy" data-trim data-line-numbers="5-6|9-16|20-39">
+import numpy as np
+import cv2
+
+
+def lin_map(x, a, b, A, B):                 # define linear mapping function
+    return (x-a)*(B-A)/(b-a) + A
+
+
+# Implementieren Sie die Funktion CoordZuZahl, die einer Pixel-Koordinate eine
+# komplexe Zahl zuweist
+def CoordZuZahl(CoordX, CoordY, bildgroesse, grenzen_reell, grenzen_im):
+    Re = lin_map(float(CoordX), 0., float(bildgroesse[0] - 1), float(grenzen_reell[0]), float(grenzen_reell[1]))
+    # wichtig: die y-Achse ist bei einem Bild vertauscht zur Koordinatenachse!
+    # Daher wird y_max - y berechnet:
+    Im = lin_map(float(bildgroesse[1] - 1) - float(CoordY), 0., float(bildgroesse[1] - 1), float(grenzen_im[0]), float(grenzen_im[1]))
+    return complex(Re, Im)
+
+# Weisen Sie jeder Pixel-Koordinate im Mandelbrot-Bild eine komplexe Zahl zu und
+# überprüfen Sie, ob diese Zahl divergiert.
+def mandelbrot(groesse=[200, 150],
+               grenzen_reell=(-2., 1.),
+               grenzen_im=(-1.1, 1.1),
+               pruef_iterationen=50):
+    ergebnis = np.zeros(groesse[::-1]+[3], dtype='uint8')
+  
+    # Sie sind dran!
+    for x in range(groesse[0]):
+        for y in range(groesse[1]):
+            z = CoordZuZahl(x, y, groesse, grenzen_reell, grenzen_im)
+            s = complex(0., 0.)
+            iter_num = pruef_iterationen
+            for i in range(pruef_iterationen):
+                s = s ** 2 + z
+                if abs(s) > 2:
+                    iter_num = i
+                    break
+            ergebnis[y, x, 0] = lin_map(iter_num, 0., pruef_iterationen, 0., 255.) # blau wert in imshow
+  
+    return ergebnis
+cv2.imshow("Mandelbrot Menge", mandelbrot([200, 150]))
+cv2.waitKey()
+cv2.destroyAllWindows()	
+					</code></pre>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal_new.js"></script>
+		<script src="plugin/math/math_new.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+		
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: false,
+				backgroundTransition: 'none',	
+				autoPlayMedia: false,	
+				controls: true,
+				katex: {
+					local: 'node_modules/katex',
+				},
+				// Learn about plugins: https://revealjs.com/plugins
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script src="js/video_slide.js"></script>
+	</body>
+</html>

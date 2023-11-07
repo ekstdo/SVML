@@ -1,0 +1,397 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+
+
+		<style>
+		.fragment.fade-in-then-disappear {
+			filter: opacity(0.0);
+			display: none;
+		}
+
+		@keyframes disappear-fragment {
+			0% {
+				filter: opacity(0.0);
+			}
+
+			99%{
+				filter: opacity(1.0);
+				display: block;
+			}
+
+			100%{
+				display: none;
+			}
+		}
+		.fragment.fade-in-then-disappear.current-fragment {
+			filter: opacity(1.0);
+			display: block;
+		}
+		.fragment.fade-in-then-disappear.visible:not(.current-fragment) {
+			animation: disappear-fragment;
+			animation-duration: 1.4s;
+			animation-fill-mode: forwards;
+		}
+
+		.fragment.fade-out.disappear.visible:not(.current-fragment) {
+			display: none;
+		}
+		</style>
+
+		<script>
+			let customFragmentEvents = { register: function(events){
+				Object.assign(this, events);
+			} };
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <section>
+                        Lösung 3.1
+                    </section>
+					<section>
+						Wie finde ich den Invers einer Matrix?
+
+						<ul>
+							<li>Adjunkte mit der cramerschen Regel: $A^{-1} = \frac{1}{det(A)} adj(A)$</li>
+							<li>Gaussche Eliminierung $[A | I] \leadsto [I | A^{-1}]$</li>
+						</ul>
+						<!-- $\begin{pmatrix} A_{11} &  \dots & A_{1n} \\ \vdots & & \vdots \\ A_{n1} & \dots & A_{nn} \end{pmatrix}$ -->
+					</section>
+
+					<section>
+						<h2>Adjunkte einer Matrix</h2>
+
+						\[(adj(A))_{i, j} = (-1)^{i + j} \text{det}\left(A_{i, j}\right)\]
+					</section>
+
+					<section style="font-size: 0.6em">
+						<h2>Adjunkte einer (2x2) Matrix</h2>
+
+						\[A^{-1} = \frac{1}{\text{det}(A)} \text{adj}\begin{pmatrix} a & b \\ c & d\end{pmatrix} = \frac 1 {ad - bc} \begin{pmatrix}d & -b \\ -c & a\end{pmatrix}\]
+
+						\[= \frac{1}{1 \cdot 4 - 2 \cdot 3} \text{adj}\begin{pmatrix} 1 & 2 \\ 3 & 4\end{pmatrix} = \frac 1 {-2}  \begin{pmatrix}4 & -2 \\ -3 & 1\end{pmatrix} \]
+
+						\[= \begin{pmatrix}-2 & 1 \\ \frac 3 2 & - \frac 1 2\end{pmatrix}\]
+					</section>
+
+				</section>
+
+				<section>
+					<h2>3.2</h2>
+
+					Wenn die Intervalllbreite (min/max Signalwerte) geg. ist:
+
+					<ul>
+						<li>Ganzzahlig: Skalierung des höchsten und niedrigsten Signalwertes auf den höchst/niedrigsten ganzzahligen Wert</li>
+						<li>Fließkommawerte: Skalieren der Signalwerte auf [-1.0; 1.0]</li>
+					</ul>
+				</section>
+
+				<script src="js/add_video_slide.js" slide_scene="Slide31"></script>
+				<section style="font-size: 0.6em">
+					<h2>3.3</h2>
+
+					<div class="fragment" data-fragment-index="1">
+						\[x_c(t) = \sin(20\pi t) + \cos(40\pi t)\]
+					</div>
+					<div class="fragment" data-fragment-index="2">
+						\[x[n] = x_c(nT) = \sin(20\pi nT) + \cos(40\pi nT)\]
+					</div>
+
+					<div class="fragment" data-fragment-index="3">
+						\[= \sin\left(\frac{\pi n}5\right) + \cos\left(\frac{2\pi n}5\right) = \hat x[n] \]
+					</div>
+					<div class="fragment" data-fragment-index="4">
+						<div>$\sin(20\pi nT)  = \sin\left(\frac{\pi n}5\right)$
+							<span class="fragment" data-fragment-index="5">$\Rightarrow 20\pi nT + 2k\pi = \frac{\pi n}5 $</span>
+						</div>
+						<div>$\cos(40\pi nT) = \cos\left(\frac{2\pi n}5\right)$
+							<span class="fragment" data-fragment-index="5">$\Rightarrow 40\pi nT + 2k\pi = \frac{\pi n}5$</span>
+						</div>
+					</div>
+					<div class="fragment fade-out disappear" data-fragment-index="9">
+						<div class="fragment" data-fragment-index="6">
+							Einfachster Fall: $k = 0$:
+						</div>
+						<div class="fragment" data-fragment-index="7">
+							\[20\pi nT = \frac{\pi n}5 \Rightarrow T = \frac 1 {100} \]
+							\[40\pi nT = \frac{\pi n}5 \Rightarrow T = \frac 1 {100}\]
+						</div>
+						<div class="fragment" data-fragment-index="8">
+							$\Rightarrow$ bei $T = \frac 1 {100}$ gilt $x[n] = \hat x[n]$
+						</div>
+					</div>
+					<div>
+						<div class="fragment" data-fragment-index="9">
+							<div style="height: 20px">
+								
+							</div>
+							Sonst: $\forall n \in \mathbb Z: 2k\pi = 20\pi n \Delta T, k \in \mathbb Z$: $\Delta T = \frac k {10}$<br/>
+							<div class="fragment" data-fragment-index="10">
+							</div>
+							<div class="fragment">
+								Also kommt für den Sinusteil $S_1 = \{\frac 1 {100} + \frac k {10} | k \in \mathbb Z\}$
+							</div>
+
+							<div class="fragment">
+								und für den Kosinusteil analog $S_2 = \{\frac 1 {100} + \frac k {20} | k \in \mathbb Z\}$
+							</div>
+
+							<div class="fragment">
+								Da beide Gleichungen erfüllt werden müssen: $S = S_1 \cap S_2 = S_1$
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<section>
+						<h2>3.4</h2>
+					</section>
+
+					<script src="js/add_video_slide.js" slide_scene="Slide34"></script>
+				</section>
+
+				<section>
+					<section>
+						<h2>3.5</h2>
+
+						<ul>
+							<li class="fragment fade-in-then-semi-out fadesomewhen1">Abtastperiode der Kamera: $T_S = \frac{1}{f_s} = \frac{1}{25/s} = \frac{1}{25}s = 0.04s$</li>
+							<li class="fragment fadesomewhen1">Wie weit dreht sich die Speiche?<br> $\varphi = 360\degree \cdot f_U \cdot T_s = \frac{1800\degree}{s} \cdot 0.04s = 72\degree$</li>
+							<li class="fragment fadesomewhen1 reappearsomewhen">Die Speiche landet näher an dem vorigen Bild der letzten Speiche ($\Delta \varphi = 90 \degree - 72 \degree = 18\degree$) als am vorigen Bild derselben Speiche ($\Delta \varphi =72\degree$)</li>
+							<li class="fragment fadesomewhen2">$\Rightarrow$ Es sieht so aus, als würde es sich rückwärts drehen</li>
+						</ul>
+
+						<canvas id="canvas1" class="fragment fadesomewhen2" width="400" height="200">
+						</canvas>
+
+						<span id="canvasevent1" class="fragment"></span>
+						<span id="canvasevent2" class="fragment"></span>
+
+						<h3 class="fragment">Ist das Abtasttheorem erfüllt?</h3>
+
+						<span class="fragment">Pro Sekunde drehen sich 4 ununterscheidbaren Speichen 5 mal: $f_{\max} = 4 \cdot 5Hz = 20Hz$</span><br>
+						<span id="decanvasevent1" class="fragment">Laut Abtasttheorem: $f_{s} &gt; 2 \cdot f_B \hat{=} 2 \cdot f_{\max} = 2 \cdot 20Hz$, da Frequenzbreite bei $0Hz$ beginnt</span>
+						<div class="fragment"> \[25Hz \ngtr 40Hz\]</div>
+
+						<span class="fragment">$\Rightarrow$ Abtasttheorem nicht erfüllt</span>
+
+						<script>
+							let canvas = document.getElementById("canvas1");
+							let ctx = canvas.getContext("2d");
+							let linFunc = x => x;
+							let otherFunc = x => 2.9 * x * x * (1 - x / 4.42);
+							class Value {
+								constructor(v, getter = linFunc){
+									this.v = v;
+									this.getter = getter;
+									this.previous = [];
+								}
+
+								interpolateTo(w, time, func = linFunc){
+									this.previous.push(this.v);
+									let start = document.timeline.currentTime;
+									let obj = this;
+									function step(stamp){
+										if (stamp >= start + time){
+											obj.v = w;
+											return;
+										}
+
+										let cur = func((stamp - start) / time);
+
+										obj.v = (1-cur) * obj.previous[obj.previous.length - 1] + cur * w;
+
+										requestAnimationFrame(step);
+									}
+									requestAnimationFrame(step);
+								}
+
+								undo(time, func = linFunc){
+									let lastValue = this.previous.pop();
+									this.interpolateTo(lastValue, time, func);
+								}
+
+								get val() {
+									return this.getter(this.v);
+								}
+							}
+							let offset = new Value(200);
+							let timeFactor = new Value(1);
+							let wheelVisible = new Value(0, x => (~~x).toString(16).padStart(2, '0'));
+
+							let start = document.timeline.currentTime;
+
+							function frame1(time){
+								time -= start;
+								let r = 80;
+								let angle = (((time * timeFactor.v) / 200.) % 1) * 2 * Math.PI;
+								let timeRounded = time - (time % ~~(40 / timeFactor.v )); 
+								let anglet25 = (((timeRounded * timeFactor.v) / 200.) % 1) * 2 * Math.PI;
+
+								let s = Math.sin(angle);
+								let c = Math.cos(angle);
+								let st25 = Math.sin(anglet25);
+								let ct25 = Math.cos(anglet25);
+								ctx.clearRect(0, 0, 400, 200);
+
+								ctx.strokeStyle = "grey";
+								ctx.lineWidth = 18;
+								ctx.beginPath()
+								ctx.arc(offset.v, 100, r, 0, 2*Math.PI + 0.01);
+								ctx.stroke()
+
+
+								ctx.strokeStyle = "#808080" + wheelVisible.val;
+								ctx.beginPath()
+								ctx.arc(300, 100, r, 0, 2*Math.PI + 0.01);
+								ctx.stroke()
+								ctx.strokeStyle = "#00ffff" + wheelVisible.val;
+								ctx.lineWidth = 5;
+								ctx.beginPath()
+								ctx.arc(300, 100, 80, 0, 2*Math.PI + 0.01);
+								ctx.stroke()
+
+								ctx.beginPath();
+
+								ctx.moveTo(ct25 * r + 300, st25 * r + 100);
+								ctx.lineTo(-ct25 * r + 300, -st25 * r + 100);
+								ctx.moveTo(-st25 * r + 300, ct25 * r + 100);
+								ctx.lineTo(st25 * r + 300, -ct25 * r + 100);
+
+								ctx.stroke()
+
+
+								ctx.strokeStyle = "cyan";
+								ctx.lineWidth = 5;
+								ctx.beginPath()
+								ctx.arc(offset.v, 100, 80, 0, 2*Math.PI + 0.01);
+								ctx.stroke()
+
+								ctx.beginPath()
+								ctx.fillStyle = "cyan";
+								ctx.arc(c * r + offset.v, s * r + 100, 15, 0, 2 * Math.PI + 0.01);
+								ctx.fill()
+
+
+								ctx.beginPath();
+
+								ctx.moveTo(c * r + offset.v, s * r + 100);
+								ctx.lineTo(-c * r + offset.v, -s * r + 100);
+								ctx.moveTo(-s * r + offset.v, c * r + 100);
+								ctx.lineTo(s * r + offset.v, -c * r + 100);
+
+								ctx.stroke()
+
+								angle += 0.01;
+
+								requestAnimationFrame(frame1);
+							}
+
+							customFragmentEvents.register({
+								"#canvas1": [function(e){
+									document.querySelectorAll(".fadesomewhen1").forEach(x => x.style.display="none");
+								}, function(e){
+									document.querySelectorAll(".fadesomewhen1").forEach(x => x.style.display="block");
+								}],
+								"#canvasevent1": [function(e){
+									offset.interpolateTo(100, 500, x => x * x * x);
+									wheelVisible.interpolateTo(255, 500, x => x * x * x);
+								}, function(e){
+									offset.undo(500);
+									wheelVisible.undo(300);
+								}],
+
+								"#canvasevent2": [function(e){
+									timeFactor.interpolateTo(0.25, 300);
+								}, function(e){
+									timeFactor.undo(300);
+								}],
+
+								"#decanvasevent1": [function(e){document.querySelectorAll(".fadesomewhen2").forEach(x => x.style.display="none")}, function(e){document.querySelectorAll(".fadesomewhen2").forEach(x => x.style.display="block")}]
+							})
+
+							requestAnimationFrame(frame1);
+						</script>
+					</section>
+
+					<section>
+						<h2>3.5</h2>
+						<div class="fragment">
+						\[w = \frac{-18\degree}{T_s} = \frac{-18 \degree}{0.04s} = \frac{-450\degree}{s} \hat{=} - 1.25 Hz\]</div>
+
+						<div class="fragment">
+							Es entspricht also 1.25 Umdrehungen pro Sekunde rückwärts
+						</div>
+					</section>
+                </section>
+			</div>
+		</div>
+
+		<script src="dist/reveal_new.js"></script>
+		<script src="plugin/math/math_new.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+			console.log(customFragmentEvents);
+		
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: false,
+				backgroundTransition: 'none',	
+				autoPlayMedia: false,	
+				controls: true,
+				katex: {
+					
+					version: 'latest',
+					delimiters: [
+					  {left: '$$', right: '$$', display: true},
+					  {left: '$', right: '$', display: false},
+					  {left: '\\(', right: '\\)', display: false},
+					  {left: '\\[', right: '\\]', display: true}
+				   ],
+				   ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+				 
+				},
+				// Learn about plugins: https://revealjs.com/plugins
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+
+			
+			Reveal.on('fragmentshown', event => {
+				for (let i in customFragmentEvents){
+					if (event.fragment.matches(i))
+						customFragmentEvents[i][0](event.fragment);
+				}
+			})
+
+			Reveal.on('fragmenthidden', event => {
+				for (let i in customFragmentEvents){
+					if (event.fragment.matches(i))
+						customFragmentEvents[i][1](event.fragment);
+				}
+			})
+		</script>
+		<script src="js/video_slide.js"></script>
+	</body>
+</html>

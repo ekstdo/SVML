@@ -1,0 +1,420 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<style type="text/css" media="all">
+			.fragment.fade-out.disappear.visible {
+				display: none;
+			}
+		</style>
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<script src="js/add_video_slide.js" slide_scene="Slide41"></script>
+					<section style="font-size: 0.6em">
+						<h2>4.1.</h2>
+
+						\[T(\{x[m]\}, n) = \sum_{k = n - n_0}^{n + n_0} x[k], n_0 \in \mathbb N\]
+
+						<ul>
+							<li>linear:
+
+								<div data-fragment-index="7" class="fragment fade-out disappear">
+									<div class="fragment" data-fragment-index="3">\[ T(\{a x_1[m] + x_2[m]\}, n) =\]</div>
+									<div class="fragment" data-fragment-index="4">\[\sum_{k = n - n_0}^{n + n_0} (a x_1[k] + x_2[k]) =\]</div>
+									<div class="fragment" data-fragment-index="5">\[a \sum_{k = n - n_0}^{n + n_0} x_1[k] + \sum_{k = n - n_0}^{n + n_0} x_2[k] = \]</div>
+									<div class="fragment" data-fragment-index="6">\[a y_1[n] + y_2[n]\]</div>
+								</div>
+								<span class="fragment" data-fragment-index="7">
+									✓
+								</span>
+							</li>
+							<li class="fragment" data-fragment-index="9">
+								zeitinvariant: <span class="fragment fade-out disappear" data-fragment-index="10">$\forall n_1 \in \mathbb N:$</span>
+
+								<div class="fragment fade-out disappear" data-fragment-index="10">\[T(\{x[m - n_1]\}, n) = \sum_{k = n - n_0}^{n + n_0} x[k - n_1] = \sum_{k = n - n_0 - n_1}^{n + n_0 - n_1} x[k] = y[n- n_1]\]</div>
+								<span class="fragment" data-fragment-index="10">
+									✓
+								</span>
+							</li>
+							<li class="fragment" data-fragment-index="19">
+								kausal: <span class="fragment fade-out disappear" data-fragment-index="20">Gegenbeispiel $n_0 = 1$</span>
+
+								<div data-fragment-index="20" class="fragment fade-out disappear">
+								\[T(\{x[m]\}, n) = \sum_{k = n - 1}^{n + 1} x[k] = x[n - 1] + x[n] + \underbrace{x[n + 1]}_{\text{noooooo}}\]
+
+								gilt aber für $n_0 = 0$
+								</div>
+								<span class="fragment" data-fragment-index="20">
+									nur für $n_0 = 0$
+								</span>
+
+							</li>
+							<li class="fragment">
+								gedächtnislos: $\lnot \text{kausal} \Rightarrow \lnot \text{gedächtnislos}$
+								<br>
+								(gilt aber bei $n_0= 0: T(x[n]) = x[n]$)
+							</li>
+							<li class="fragment">
+								stabil: 
+								\[|y[n]| = \left|\sum_{k = n - n_0}^{n + n_0} x[k]\right| = \sum_{k = n - n_0}^{n + n_0} |x[k]| \leq \sum_{k = n - n_0}^{n + n_0} B_x = (2 n_0 + 1) B_x =: B_y \]
+							</li>
+						</ul>
+					</section>
+					<section style="font-size: 0.6em">
+						\[T(\{x[m]\}, n) = e^{x[n]}\]
+
+						<ul>
+							<li class="fragment">
+								linear: nein, $a = 2, x[n] = 1$:
+
+								\[T(\{a x[m]\}, n) = e^2 \neq 2e = 2T(\{x[m]\}, n)\]
+							</li>
+							<li class="fragment">zeitinvariant: \[T(\{x[m - n_0]\}, n) = e^{n - n_0} = y[n - n_0]\]</li>
+							<li class="fragment">gedächtnislos: $T(x[n]) = e^{x[n]}$</li>
+							<li class="fragment">kausal: gedächtnislos $\Rightarrow$ kausal </li>
+							<li class="fragment">stabil: $|y[n]| = |e^{x[n]}| \stackrel{e^x \text{ monoton steigend}}{\leq} |e^{B_x}| =: B_y$ </li>
+						</ul>
+					</section>
+					<section style="font-size: 0.6em">
+						\[T(\{x[m]\}, n) = x[-n]\]
+						<ul>
+							<li class="fragment">
+								linear: 
+
+								\[T(\{a x_1[m] + x_2[m]\}, n) = a x_1[-n] + x_2[-n] = a y_1[n] + y_2[n]\]
+							</li>
+							<li class="fragment">
+								zeitinvariant: Gegenbeispiel $n_0 = 1, n = 0$
+
+								\[T(\{x[m - 1]\}, 0) = y_1[0] = x_1[-0] = x[-1]\]
+								
+								\[T(\{x[m]\}, 0 - 1) = x[-(-1)] = x[1]\]
+							</li>
+
+							<li  class="fragment">kausal: Gegenbeispiel $n = -3$
+
+								\[y[-3] = x[3]\]
+							</li>
+							<li class="fragment">gedächtnislos: $\lnot \text{kausal} \Rightarrow \lnot \text{gedächtnislos}$</li>
+							<li class="fragment">stabil: $\forall n: x[n] < B_x \Rightarrow \forall n: x[-n] = y[n] < B_x =: B_y$</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+						\[y[n] = x[n] * h[n] = \sum_{k = - \infty}^{\infty} x[k] h[n - k]\]
+				</section>
+				<script src="js/add_video_slide.js" slide_scene="Slide42"></script>
+				<script src="js/add_video_slide.js" slide_scene="Slide42b"></script>
+				<script src="js/add_video_slide.js" slide_scene="Slide43"></script>
+				<section  style="font-size: 0.6em">
+					$n$ geht also von $N_4 = N_0 + N_2$ bis $N_5 = N_1 + N_3$
+
+					<div>
+						\[M = N_1 - N_0 + 1, N= N_3 - N_2 + 1\]
+					</div>
+					<div>
+						\[O = N_5 - N_4 + 1 = (N_1 + N_3) - (N_0 + N_2) + 1\]
+						\[= N_1 - N_0 + 1 - 1 + N_3 - N_2 + 1 - 1 + 1\]
+						\[= M + N - 1\]
+					</div>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"> <code style="white-space: pre-wrap" class="hlpy" data-trim data-line-numbers="1-10|11-25">
+# coding: utf-8
+# Programmieraufgaben Übungsblatt 4
+# =================================
+# # Aufgabe 4 - Signalrekonstruktion
+
+# Die folgenden imports werden empfohlen:
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+
+r""" Die folgenden Funktionen sind gegeben: """
+
+# Das ist eine moegliche Implementierung der `sinc`-Funktion. Die Funktion wird an
+# allen Stellen t berechnet, mit der Abtastperiode T und hat ihr globales
+# Maximum an dem x-Wert offset.
+def sinc(t, T, offset):
+    r"""Berechnet die `sinc` Funktion."""
+    x = np.pi * (t-offset) / T
+    y = np.ones(x.shape)
+    x_mask = x != 0
+    y[x_mask] = np.sin(x[x_mask]) / x[x_mask]
+    return y
+
+
+r"""############################################################################
+Sie sind dran:
+#############################################################################"""
+
+# Definieren Sie die Funktion `sigFunc(x)` zum Berechnen des Signals aus Blatt 3
+# Aufgabe 3 an einer oder mehreren gegebenen Stellen `x` (`x` soll auch ein
+# Vektor sein dürfen).
+def sigFunc(x):
+    r"""Berechnet Signalwerte an Stelle(n) x und gibt diese zurück
+    :param x: Zeitpunkte zu denen die Signalwerte berechnet werden sollen.
+    :return: Die berechneten Signalwerte
+    """
+    # ... #
+
+
+
+def reconstruct(x, xs, ys, abtastperiode, n):
+    """
+    Rekonstruieren Sie das Signal y (definiert zu den Zeiten x) mithilfe der ersten n Abtastwerte in ys.
+    :param x: Zeiten zu denen das Originalsignal definiert ist
+    :param xs: Abtastzeitpunkte des abgetastetetn Signals
+    :param ys: Funktionswerte des abgetasteten Signals
+    :param abtastperiode: Abtastperiode (T)
+    :param n: Anzahl an Abtastwerten, die zur Rekonstruktion verwendet werden sollen.
+    :return: Das rekonstruierte Signal yr
+    """
+    yr = np.zeros(x.shape)
+
+    # ... #
+
+    return yr
+
+
+# Definieren Sie die Funktion `showReconstruction`. Tasten sie zuerst das in der
+# Funktion sigFunc erzeugte Signal ab.  Rekonstruieren Sie das Signal dann analog zur Vorlesung
+# "Digitale Signale", Folien zur Rekonstruktion (speziell: "Grundidee der Rekonstruktion")
+def showReconstruction(abtastperiode, definitionsbereich):
+    r"""
+    Tastet ein Signal mit der gegebenen Abtastperiode im
+    Wertebereich ab und zeigt das rekonstruierte Signal
+    für verschieden viele Abtastwerte an.
+    :param abtastperiode: Abtastperiode (T)
+    :param definitionsbereich: Definitionsbereich in dem das Originalsignal betrachtet und abgetastet wird
+    """
+    # 1000 äquidistante Punkte
+    x = np.linspace(definitionsbereich[0], definitionsbereich[1], num=1000)
+    # berechne Funktonswerte
+    y = # ... #
+
+    # Taste 1d signal ab
+    # Abtastpunkte
+    xs = # ... #
+    # Funktionswerte der Abtastpunkte
+    ys = # ... #
+    # Anzahl der Abtastpunkte
+    N = # ... #
+
+    # Visualisierung der Rekonstruktion
+    # AB HIER MUESSEN SIE NICHTS MEHR AN DIESER FUNKTION AENDERN !!!
+    wertebereich = [np.min(y), np.max(y)]
+    fig = plt.figure()
+    axes = [plt.subplot2grid((3, 1), (i, 0), fig=fig) for i in range(3)]
+
+    axes[0].plot(x, y)
+    axes[0].stem(xs, ys, "-")
+    axes[0].set_title("Originalsignal")
+    reconstruction_plot, = axes[1].plot(x, np.zeros(x.shape), color="g")
+    diff_plot, = axes[2].plot(x, y, color="r")
+
+    for ax in axes:
+        ax.set_xlim(definitionsbereich)
+        ax.set_ylim([wertebereich[0] - 0.3, wertebereich[1] + 0.3])
+
+    plt.tight_layout()
+
+    def animate_reconstruction(n):
+        yr = reconstruct(x, xs, ys, abtastperiode=abtastperiode, n=n)
+        reconstruction_plot.set_data(x, yr)
+        axes[1].set_title("Rekonstruktion mittels der ersten {} Werte".format(n))
+        diff_plot.set_data(x, y - yr)
+        axes[2].set_title("Rekonstruktionsfehler nach den ersten {} Werten".format(n))
+
+        return [reconstruction_plot, diff_plot]
+
+    ani = FuncAnimation(fig, func=animate_reconstruction, frames=N+1, interval=500, blit=False, repeat=False)
+    plt.show()
+
+
+# Zeigen sie die Visualisierung der Rekonstruction an.
+# Testen Sie verschiedene Abtastperioden.
+# Achtung: Wenn Sie die Abtastperiode vergroessern, sollten Sie auch den Dargestellten Definitionsbereich vergroessern.
+showReconstruction(abtastperiode=0.01, definitionsbereich=[-0.2, 0.2])
+					</code>
+						
+					</pre>
+				</section>
+
+				<section data-auto-animate>
+					<pre data-id="code-animation"> <code style="white-space: pre-wrap" class="hlpy" data-trim data-line-numbers="33-38|38|33-38|42-57|54-55|63-70|71-74|76-82">
+# coding: utf-8
+# Programmieraufgaben Übungsblatt 4
+# =================================
+# # Aufgabe 4 - Signalrekonstruktion
+
+# Die folgenden imports werden empfohlen:
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+
+r""" Die folgenden Funktionen sind gegeben: """
+
+# Das ist eine moegliche Implementierung der `sinc`-Funktion. Die Funktion wird an
+# allen Stellen t berechnet, mit der Abtastperiode T und hat ihr globales
+# Maximum an dem x-Wert offset.
+def sinc(t, T, offset):
+    r"""Berechnet die `sinc` Funktion."""
+    x = np.pi * (t-offset) / T
+    y = np.ones(x.shape)
+    x_mask = x != 0
+    y[x_mask] = np.sin(x[x_mask]) / x[x_mask]
+    return y
+
+
+r"""############################################################################
+Sie sind dran:
+#############################################################################"""
+
+# Definieren Sie die Funktion `sigFunc(x)` zum Berechnen des Signals aus Blatt 3
+# Aufgabe 3 an einer oder mehreren gegebenen Stellen `x` (`x` soll auch ein
+# Vektor sein dürfen).
+def sigFunc(x):
+    r"""Berechnet Signalwerte an Stelle(n) x und gibt diese zurück
+    :param x: Zeitpunkte zu denen die Signalwerte berechnet werden sollen.
+    :return: Die berechneten Signalwerte
+    """
+    return np.sin(2 * np.pi * 10 * x) + np.cos(2 * np.pi * 20 * x)
+
+
+
+def reconstruct(x, xs, ys, abtastperiode, n):
+    """
+    Rekonstruieren Sie das Signal y (definiert zu den Zeiten x) mithilfe der ersten n Abtastwerte in ys.
+    :param x: Zeiten zu denen das Originalsignal definiert ist
+    :param xs: Abtastzeitpunkte des abgetastetetn Signals
+    :param ys: Funktionswerte des abgetasteten Signals
+    :param abtastperiode: Abtastperiode (T)
+    :param n: Anzahl an Abtastwerten, die zur Rekonstruktion verwendet werden sollen.
+    :return: Das rekonstruierte Signal yr
+    """
+    yr = np.zeros(x.shape)
+
+    for i in range(min(n, xs.shape[0])):
+        yr = yr + ys[i] * sinc(x, abtastperiode, xs[i])
+
+    return yr
+
+
+# Definieren Sie die Funktion `showReconstruction`. Tasten sie zuerst das in der
+# Funktion sigFunc erzeugte Signal ab.  Rekonstruieren Sie das Signal dann analog zur Vorlesung
+# "Digitale Signale", Folien zur Rekonstruktion (speziell: "Grundidee der Rekonstruktion")
+def showReconstruction(abtastperiode, definitionsbereich):
+    r"""
+    Tastet ein Signal mit der gegebenen Abtastperiode im
+    Wertebereich ab und zeigt das rekonstruierte Signal
+    für verschieden viele Abtastwerte an.
+    :param abtastperiode: Abtastperiode (T)
+    :param definitionsbereich: Definitionsbereich in dem das Originalsignal betrachtet und abgetastet wird
+    """
+    # 1000 äquidistante Punkte
+    x = np.linspace(definitionsbereich[0], definitionsbereich[1], num=1000)
+    # berechne Funktonswerte
+    y = sigFunc(x)
+
+    # Taste 1d signal ab
+    # Abtastpunkte
+    xs = np.arange(definitionsbereich[0], definitionsbereich[1]+1e-10, np.abs(abtastperiode))
+	# 1e-10 ist recht arbitrary, stattedessen kann man auch: math.nextafter(definitionsbereich[1], math.inf) nehmen
+    # Funktionswerte der Abtastpunkte
+    ys = sigFunc(xs)
+    # Anzahl der Abtastpunkte
+    N = xs.shape[0]
+
+    # Visualisierung der Rekonstruktion
+    # AB HIER MUESSEN SIE NICHTS MEHR AN DIESER FUNKTION AENDERN !!!
+    wertebereich = [np.min(y), np.max(y)]
+    fig = plt.figure()
+    axes = [plt.subplot2grid((3, 1), (i, 0), fig=fig) for i in range(3)]
+
+    axes[0].plot(x, y)
+    axes[0].stem(xs, ys, "-")
+    axes[0].set_title("Originalsignal")
+    reconstruction_plot, = axes[1].plot(x, np.zeros(x.shape), color="g")
+    diff_plot, = axes[2].plot(x, y, color="r")
+
+    for ax in axes:
+        ax.set_xlim(definitionsbereich)
+        ax.set_ylim([wertebereich[0] - 0.3, wertebereich[1] + 0.3])
+
+    plt.tight_layout()
+
+    def animate_reconstruction(n):
+        yr = reconstruct(x, xs, ys, abtastperiode=abtastperiode, n=n)
+        reconstruction_plot.set_data(x, yr)
+        axes[1].set_title("Rekonstruktion mittels der ersten {} Werte".format(n))
+        diff_plot.set_data(x, y - yr)
+        axes[2].set_title("Rekonstruktionsfehler nach den ersten {} Werten".format(n))
+
+        return [reconstruction_plot, diff_plot]
+
+    ani = FuncAnimation(fig, func=animate_reconstruction, frames=N+1, interval=500, blit=False, repeat=False)
+    plt.show()
+
+
+# Zeigen sie die Visualisierung der Rekonstruction an.
+# Testen Sie verschiedene Abtastperioden.
+# Achtung: Wenn Sie die Abtastperiode vergroessern, sollten Sie auch den Dargestellten Definitionsbereich vergroessern.
+showReconstruction(abtastperiode=0.01, definitionsbereich=[-0.2, 0.2])
+					</code>
+						
+					</pre>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal_new.js"></script>
+		<script src="plugin/math/math_new.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+		
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: false,
+				backgroundTransition: 'none',	
+				autoPlayMedia: false,	
+				controls: true,
+				katex: {
+					version: 'latest',
+					delimiters: [
+					  {left: '$$', right: '$$', display: true},
+					  {left: '$', right: '$', display: false},
+					  {left: '\\(', right: '\\)', display: false},
+					  {left: '\\[', right: '\\]', display: true}
+				   ],
+				   ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+				 
+				},
+				// Learn about plugins: https://revealjs.com/plugins
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script src="js/video_slide.js"></script>
+	</body>
+</html>

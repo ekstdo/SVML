@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<style type="text/css" media="all">
+			.fragment.fade-out.disappear.visible {
+				display: none;
+			}
+		</style>
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+
+					<script src="js/add_video_slide.js" slide_scene="Slide51"></script>
+					<section style="font-size: 0.6em">
+
+						<h2>5.2</h2>
+						
+						<div>$x_1[k], x_2[k]$ sollen <b>zirkulär</b> gefaltet werden </div><br>
+
+						<ol>
+							<li>
+								$x_1[k] \stackrel{\text{DFT}}{\leftrightarrow} X_1[k], x_2[k] \stackrel{\text{DFT}}{\leftrightarrow} X_2[k]$ mit $N$-Punkt DFTs
+							</li>
+							<li>
+								$X_3[k] = X_1[k] X_2[k], (0 \leq k < N)$
+							</li>
+							<li>
+								$x_3[n] \stackrel{\text{DFT}}{\leftrightarrow} X_3[n]$ durch Inverse diskrete fourier transformation
+							</li>
+						</ol><br>
+						<br>
+
+						sodass: $x_3[n] = x_1[n] \raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {N}}} x_2[n]$
+
+					</section>
+
+					<section style="font-size: 0.6em">
+						<div>Idee: Wenn man ne Zirkuläre Faltung $x_1[n] \raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {N}}} x_2[n]$ mit genug 0en füllt $N \geq L + P - 1$, ergibt es eine lineare Faltung</div>
+
+						<div>
+							Sonst kommt es zu Zeit aliasing in den ersten $P - 1$ Werten
+						</div>
+					</section>
+
+					<script src="js/add_video_slide.js" slide_scene="Slide52b"></script>
+
+					<section>
+						<h2>Warum blockweise falten?</h2>
+
+						<ul>
+							<li>Um Zeit zu sparen wird mit DFT gerechnet mit $N \geq P + L - 1$. Damit ist es bei größeren $N$ aufwendiger</li>
+							<li>Das System müsste für die DFT vorher komplett bekannt sein → Verzögerung</li>
+						</ul>
+					</section>
+					<section style="font-size: 0.6em">
+						<h2>Wie blockweise falten?</h2>
+
+						<div style="display: flex">
+							<ul>
+								<li class="fragment" data-fragment-index="1">Overlap add:
+
+									<ul>
+										<li class="fragment" data-fragment-index="2">Signal wird aufgeteilt in nicht überlappende Blöcke der Länge $L\prime$</li>
+										<li class="fragment" data-fragment-index="3">Blöcke werden zirkulär gefaltet (mit DFT, $N \geq L\prime + P - 1$)</li>
+										<li class="fragment" data-fragment-index="4">Ergebnisse überlappen um $P - 1$ Werte</li>
+										<li class="fragment" data-fragment-index="5">die gefalteten Blöcke werden addiert (auch der überlappende Teil)</li>
+									</ul>
+								</li>
+								<li class="fragment" data-fragment-index="6">
+									Overlap save:
+									<ul>
+										<li class="fragment" data-fragment-index="7">$P-1$ Nullen voranstellen und in $L'$ lange Blöcke aufteilen, die sich um $P - 1$ Werte überschneiden</li>
+										<li class="fragment" data-fragment-index="8">Blöcke werden zirkulär gefaltet (mit DFT, $N = L\prime$)</li>
+										<li class="fragment" data-fragment-index="9">Damit sind die ersten $P- 1$ Werte verfälscht und werden verworfen</li>
+										<li class="fragment" data-fragment-index="10">die Ergebnisse werden aneinander gehängt</li>
+									</ul>
+								</li>
+							</ul>
+
+							<div>
+								<div class="fragment fade-out disappear" data-fragment-index="7" style="width: 100%">
+									<img  class="fragment" data-fragment-index="2" src="/img/overlap-add.png" alt="">
+								</div>
+								<div>
+									<img  class="fragment" data-fragment-index="7" src="/img/overlap-save.png" alt="">
+								</div>
+							</div>
+						</div>
+					</section>
+					<section style="font-size: 0.6em">
+
+						<h2>5.3.1 Übersicht über Fouriertransformationen</h2>
+
+						<table>
+							<tr>
+								<td>Fourier Transformation</td>
+								<td>Nutzen</td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>FT</td>
+								<td>zeit-, wertkontinuierlich</td>
+								<td>$X(e^{\omega j}) = \int_{-\infty}^{\infty} x(t) e^{-2 \pi j \omega t} dt$</td>
+							</tr>
+							<tr>
+								<td>DTFT (discrete time fourier transform)</td>
+								<td>zeitdiskret, wertkontinuierlich</td>
+								<td>$X(e^{j \omega}) = \sum_{n = -\infty}^{\infty} x[n] e^{-j \omega n}$</td>
+								<td>$x[n] = \frac{1} {2\pi} \int_{-\pi}^{\pi} X(e^{j \omega}) e^{j \omega n} d\omega$</td>
+							</tr>
+							<tr>
+								<td>DFS (discrete fourier series)</td>
+								<td>diskrete Werte, Signal periodisch mit Länge N</td>
+								<td>$\tilde X[k] = \sum_{n = 0}^{N - 1} \tilde x[n] e^{-j \frac{2 \pi k n} N}$</td>
+								<td>$\tilde x[n] = \frac 1 N \sum_{k = 0}^{N- 1} \tilde X[k] e^{j \frac{2 \pi k n} N}$</td>
+							</tr>
+							<tr>
+								<td>DFT (discrete fourier transform)</td>
+								<td>diskrete Werte, endliche Folgen</td>
+								<td>$X[k] = \sum_{n = 0}^{N - 1} x[n] e^{-j \frac{2 \pi k n} N}$</td>
+								<td>$x[n] = \frac 1 N \sum_{k = 0}^{N- 1} X[k] e^{j \frac{2 \pi k n} N}$</td>
+							</tr>
+						</table>
+
+					</section>
+					<section style="font-size: 0.6em" class="">
+
+						\[r[n] = \begin{cases} 1, 0 \leq n \leq M \\ 0, \text{ sonst} \end{cases}\]
+
+						\[R(e^{i \omega}) \stackrel{\text{Fourierpaar 9}}= \frac{\sin(\omega \frac{M + 1}2)}{\sin (\frac {\omega} 2)} e^{-j\omega M/2}\]
+
+					</section>
+
+					<section style="font-size: 0.6em">
+						
+						\[w[n] = \begin{cases} \frac 1 2 (1 - \cos(\frac {2\pi n} m)), 0 \leq n \leq M \\ 0 \text{, sonst} \end{cases}\]
+						<div class="fragment">
+							\[= \frac 1 2 (1 - \cos(\frac {2\pi n} m)) r[n]\]
+						</div>
+						<div class="fragment">
+						\[\stackrel{\text{Euler Formel}}= \frac 1 2 \left(1 - \frac{e^{i\frac{2 \pi n} M}+ e^{-i \frac{2 \pi n} M}}{2} \right) r[n]\]
+						</div>
+						<div class="fragment">
+						\[=\frac 1 2 r[n] - \frac 1 4 e^{i \frac{2 \pi n} M} r[n] + \frac 1 4 e^{-i \frac{2 \pi n} M} r[n]\]
+						</div>
+						<div class="fragment">
+
+						\[W(e^{i \omega}) \stackrel{\text{FT Theorem 1 \& 3}}= \frac 1 2 R(e^{i \omega}) - \frac 1 4 R(e^{i (\omega - \frac {2 \pi} M)}) - \frac 1 4 R(e^{i (\omega + \frac{2 \pi} M )})\]
+						</div>
+					</section>
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal_new.js"></script>
+		<script src="plugin/math/math_new.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+		
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: false,
+				backgroundTransition: 'none',	
+				autoPlayMedia: false,	
+				controls: true,
+				katex: {
+					version: 'latest',
+					delimiters: [
+					  {left: '$$', right: '$$', display: true},
+					  {left: '$', right: '$', display: false},
+					  {left: '\\(', right: '\\)', display: false},
+					  {left: '\\[', right: '\\]', display: true}
+				   ],
+				   ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+				 
+				},
+				// Learn about plugins: https://revealjs.com/plugins
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script src="js/video_slide.js"></script>
+	</body>
+</html>

@@ -76,13 +76,13 @@
 					<section>
 						<h2>Adjunkte einer Matrix</h2>
 
-						\[(adj(A))_{i, j} = (-1)^{i + j} \text{det}\left(A_{i, j}\right)\]
+						\[(adj(A))^T_{i, j} = (-1)^{i + j} \text{det}\left(A_{i, j}\right)\]
 					</section>
 
 					<section style="font-size: 0.6em">
 						<h2>Adjunkte einer (2x2) Matrix</h2>
 
-						\[A^{-1} = \frac{1}{\text{det}(A)} \text{adj}\begin{pmatrix} a & b \\ c & d\end{pmatrix} = \frac 1 {ad - bc} \begin{pmatrix}d & -b \\ -c & a\end{pmatrix}\]
+						\[A^{-1} = \frac{1}{\text{det}(A)} \text{adj}\begin{pmatrix} a & b \\ c & d\end{pmatrix} = \frac 1 {ad - bc} \begin{pmatrix}d & -c \\ -b & a\end{pmatrix}^T = \frac 1 {ad - bc} \begin{pmatrix}d & -b \\ -c & a\end{pmatrix}\]
 
 						\[= \frac{1}{1 \cdot 4 - 2 \cdot 3} \text{adj}\begin{pmatrix} 1 & 2 \\ 3 & 4\end{pmatrix} = \frac 1 {-2}  \begin{pmatrix}4 & -2 \\ -3 & 1\end{pmatrix} \]
 

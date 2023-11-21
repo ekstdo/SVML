@@ -43,7 +43,7 @@ class Slide21(SlideScene):
         text = MyMathTex(r"|z_1 z_2| \stackrel ! = |z_1| |z_2|, z_1 := x_1 + i y_1, z_2 := x_2 + i y_2")
         text2 = MyMathTex(r"|z_1 z_2|")
         text3 = MyMathTex(r"\stackrel {\text{def}.} = |(x_1 + i y_1) (x_2 + i y_2)|")
-        text4 = MyMathTex(r"= |x_1 y_1 + i x_1 y_2 + i x_2 y_1 - x_2 y_2|")
+        text4 = MyMathTex(r"= |x_1 y_2 + i y_1 y_2 + i x_2 y_1 - x_2 y_2|")
         text5 = MyMathTex(r"= |(x_1 y_1 - x_2 y_2) + i (x_1 y_2 + x_2 y_1)|")
         text6 = MyMathTex(r"= |\underbrace{(x_1 y_1 - x_2 y_2)}_{\text{Realteil}} + i \underbrace{(x_1 y_2 + x_2 y_1)}_{\text{Imaginärteil}}|")
         text8 = MyMathTex(r"= \sqrt{(x_1 x_2 - y_1 y_2)^2 + (x_1 y_2 + x_2 y_1)^2}")

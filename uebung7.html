@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>SVML Übung 5</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<style type="text/css" media="all">
+			.fragment.fade-out.disappear.visible {
+				display: none;
+			}
+		</style>
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+
+					<section style="font-size: 0.6em">
+
+						<h2>7.1</h2>
+
+						\[B_{u, v} = \frac{1}{\sqrt{M N}} b_u b_v^T = \frac 1 {\sqrt {MN}} \begin{pmatrix} w^0_M \\ w^u_M \\ w^{2u}_M \\ \vdots \\ w_M^{(M - 1)u} \end{pmatrix} \begin{pmatrix} w_N^0 , w_N^v, \dots, w_N^{(N - 1)v} \end{pmatrix}\]
+
+						mit $w_N = e^{i \frac{2 \pi} N }$
+
+						ZZ: $G, H$ orthogonal $\stackrel{\text{def.}}\Leftrightarrow \langle G, H \rangle = 0$
+
+						in das Skalarprodukt eingesetzt:
+
+						\[\langle B_{u, v}, B_{u\prime, v\prime} \rangle = \sum_{m = 0}^{M - 1} \sum_{n = 0}^{N - 1} \underbrace{\left( \frac 1 {\sqrt{MN}} w^{mu}_M w^{nv}_N\right)^*}_{g_{u, v}^*}\cdot \underbrace{\frac 1 {\sqrt{MN}}w_M^{m u\prime} w_N^{n v\prime}}_{h_{u\prime, v\prime}}\]
+
+						\[= \frac 1 {MN} \sum_{m = 0}^{M - 1} \sum_{n = 0}^{N - 1} (e^{\frac{2 \pi imu} M} e^{\frac{2 \pi inv} N})^* e^{\frac{2 \pi imu\prime} M} e^{\frac{2 \pi inv\prime} N}\]
+					</section>
+
+					<section style="font-size: 0.6em">
+						\[= \frac 1 {MN} \sum_{m = 0}^{M - 1} \sum_{n = 0}^{N - 1} (e^{\frac{2 \pi imu} M} e^{\frac{2 \pi inv} N})^* e^{\frac{2 \pi imu\prime} M} e^{\frac{2 \pi inv\prime} N}\]
+						\[= \frac 1 {MN} \sum_{m = 0}^{M - 1} \sum_{n = 0}^{N - 1} e^{-\frac{2 \pi imu} M} e^{-\frac{2 \pi inv} N} e^{\frac{2 \pi imu\prime} M} e^{\frac{2 \pi inv\prime} N}\]
+						\[= \frac 1 {MN} \sum_{m = 0}^{M - 1} \sum_{n = 0}^{N - 1} e^{\frac{2 \pi im} M (u\prime - u)} e^{\frac{2 \pi in} N (v\prime - v)}\]
+						\[= \frac 1 {MN} \sum_{m = 0}^{M - 1} e^{2 \pi i\frac{m} M (u\prime - u)} \sum_{n = 0}^{N - 1}  e^{2 \pi i\frac{n} N (v\prime - v)}\]
+					</section>
+
+					<section style="font-size: 0.6em">
+						Wir betrachten uns:
+
+						\[\sum_{n = 0}^{N - 1}  e^{2 \pi i\frac{n} N (v\prime - v)}\]
+
+						<ul>
+							<li>
+								$v = v\prime: \sum_{n = 0}^{N - 1}  e^{2 \pi i\frac{n} N 0} = N$
+							</li>
+							<li>$v \neq v\prime: \sum_{n = 0}^{N - 1} e^{2 \pi i \frac n N (v - v\prime)}$, geometrische Summe:
+
+								\[\sum_{k = 0}^{N - 1} q^k = \frac{1 - q^N}{1 - q} \]
+
+								\[\sum_{n = 0}^{N - 1} (e^{2 \pi i \frac 1 N (v - v\prime)})^n = \frac{1 - (e^{2 \pi i \frac 1 N (v - v\prime)})^N}{1 - e^{2 \pi i \frac 1 N (v - v\prime)}} = \frac{1 - \underbrace{e^{2\pi i (v - v\prime) }}_{= 1}}{1 - e^{2 \pi i \frac 1 N (v - v\prime)}} = 0 \]
+
+							</li>
+						</ul>
+
+						also gilt:
+
+						\[\sum_{n = 0}^{N - 1}  e^{2 \pi i\frac{n} N (v\prime - v)} = \begin{Bmatrix} N \text{, wenn } v = v\prime \\ 0 \text{, sonst}\end{Bmatrix} = N \delta_{v, v\prime} = N  {𝟙}_{v = v\prime}\]
+					</section>
+
+					<section style="font-size: 0.6em">
+						\[= \frac 1 {MN} \sum_{m = 0}^{M - 1} e^{2 \pi i\frac{m} M (u\prime - u)} \sum_{n = 0}^{N - 1}  e^{2 \pi i\frac{n} N (v\prime - v)}\]
+						\[= \frac 1 {MN} \sum_{m = 0}^{M - 1} e^{2 \pi i\frac{m} M (u\prime - u)}  N {𝟙}_{v = v\prime}\]
+						\[= \frac 1 {M}   {𝟙}_{v = v\prime} \sum_{m = 0}^{M - 1} e^{2 \pi i\frac{m} M (u\prime - u)} \]
+						\[= \frac 1 {M}   {𝟙}_{v = v\prime} M  {𝟙}_{u = u\prime}\]
+						\[= {𝟙}_{v = v\prime} {𝟙}_{u = u\prime}\]
+						\[= {𝟙}_{v = v\prime \land u = u\prime}\]
+
+						$\Rightarrow$ sobald $v$ und $v\prime$ oder $u$ und $u\prime$ verschieden sind (also eine andere Basismatrix), sind sie orthogonal
+					</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal_new.js"></script>
+		<script src="plugin/math/math_new.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+		
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: false,
+				backgroundTransition: 'none',	
+				autoPlayMedia: false,	
+				controls: true,
+				katex: {
+					version: 'latest',
+					delimiters: [
+					  {left: '$$', right: '$$', display: true},
+					  {left: '$', right: '$', display: false},
+					  {left: '\\(', right: '\\)', display: false},
+					  {left: '\\[', right: '\\]', display: true}
+				   ],
+				   ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+				 
+				},
+				// Learn about plugins: https://revealjs.com/plugins
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script src="js/video_slide.js"></script>
+	</body>
+</html>

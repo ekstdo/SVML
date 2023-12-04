@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>SVML Übung 6</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<style type="text/css" media="all">
+			.fragment.fade-out.disappear.visible {
+				display: none;
+			}
+		</style>
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+					<section style="font-size: 0.6em">
+						<h2>6.1</h2>
+						<table>
+							<tr class="fragment">
+								<td>Orthogonalproj.</td>
+								<td>Zentralproj.</td>
+							</tr>
+							<tr class="fragment">
+								<td colspan="2">Abbildung eines 3D Systems auf ein 2D System</td>
+							</tr>
+							<tr class="fragment">
+								<td>parallele Linien bleiben parallel</td>
+								<td>parallele Linien treffen sich im Bild (Horizont)</td>
+							</tr>
+							<tr class="fragment">
+								<td>Dritte Dim. wird verworfen: $(x, y, z)^T \to (x, y)^T$</td>
+								<td>abh. von einer Brennweite: $(x, y, z)^T \to (f \frac x z, f \frac y z)^T$</td>
+							</tr>
+							<tr class="fragment">
+								<td>Abbildung ist unabhängig von der Entfernung (in z) zur Abbildungsebene</td>
+								<td>Entfernte Objekte sind kleiner</td>
+							</tr>
+						</table>
+					</section>
+
+					<section>
+						<h2>6.1.3</h2>
+
+						Orthogonalprojektion hat keine Perspektive $\Rightarrow$ Tiefe zur Kamera ist irrelevant
+					</section>
+
+					<section>
+						<h2>6.1.4</h2>
+
+						\[P = \begin{pmatrix} f & 0 & 0 & 0 \\ 0 & f & 0 & 0 \\ 0 & 0 & 1 & 0 \end{pmatrix}\]
+
+						\[P_0 = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}\]
+					</section>
+				</section>
+				<section>
+					<section style="font-size: 0.6em">
+						<h2>6.2.1</h2>
+
+						<div>
+							Punkt in der alten Welt: $\begin{pmatrix} X \\ Y \\ Z\end{pmatrix}$, Punkt in der neuen Welt: $\begin{pmatrix}2X \\ 2Y \\ 2Z\end{pmatrix}$
+						</div>
+						<div>
+							Die Kamera verändert sich nicht: $(X, Y, Z)^T \mapsto (f \frac X Z, f \frac Y Z)^T$
+						</div>
+
+						<div class="fragment">
+							\[(2X, 2Y, 2Z)^T \mapsto (f \frac{2X}{2Z}, f\frac{2Y}{2Z})^T = (f \frac X Z, f \frac Y Z)\]
+						</div>
+					</section>
+
+					<section style="font-size: 0.6em">
+						<h2>6.2.2</h2>
+
+						\[M = \begin{pmatrix} f & 0 & 0 & 0 \\ 0 & f & 0 & 0 \\ 0 & 0 & 1 & 0 \end{pmatrix}, P = \begin{pmatrix} 6 \\ 10 \\ 18 \end{pmatrix}_{\text{eukl.}} \rightsquigarrow \begin{pmatrix}6 \\ 10 \\ 18 \\ 1\end{pmatrix}_h =: P_h\]
+
+						<div class="fragment">
+						\[P\prime_h = M \cdot P_h = \begin{pmatrix} f & 0 & 0 & 0 \\ 0 & f & 0 & 0 \\ 0 & 0 & 1 & 0 \end{pmatrix}\begin{pmatrix}6 \\ 10 \\ 18 \\ 1\end{pmatrix}_h = \begin{pmatrix}6f \\ 10f \\ 18\end{pmatrix}_h\]
+						</div>
+
+						<div class="fragment">
+						\[\begin{pmatrix}6f \\ 10f \\ 18\end{pmatrix}_h \rightsquigarrow \begin{pmatrix}\frac{6f}{18} \\ \frac{10f}{18}\end{pmatrix}_{\text{eukl.}} = \begin{pmatrix}\frac{f}{3} \\ \frac{5f}{9}\end{pmatrix}_{\text{eukl.}}\]
+						</div>
+					</section>
+
+					<section>
+						<h2>Vorteile homogener Koordinaten:</h2>
+
+						<ul>
+							<li class="fragment">Abbildung lässt sich als Matrixmultiplikation darstellen</li>
+							<li class="fragment">Skalierung eines Punktes führt zum gleichen eukl. Punkt</li>
+							<li class="fragment">kann Punkte darstellen, die eukl. nicht darstellbar sind (z.B. $(1, 1, 1, 0)^T$ = Punkt im Unendlichen)</li>
+						</ul>
+					</section>
+
+					<section style="font-size: 0.6em">
+						<h2>6.2.2.b</h2>
+						\[M \cdot W = \begin{pmatrix} f & 0 & 0 & 0 \\ 0 & f & 0 & 0 \\ 0 & 0 & 1 & 0 \end{pmatrix} \begin{pmatrix}1 \\ 1 \\ 1 \\ 0\end{pmatrix} = \begin{pmatrix} f \\ f \\ 1\end{pmatrix}_h \rightsquigarrow \begin{pmatrix}f \\ f\end{pmatrix}_{\text{eukl.}} \]
+					</section>
+
+					<section style="font-size: 0.6em">
+						<h2>Aufgabe 6.2.3</h2>
+
+						mit Matrizen: 
+
+						\[\begin{pmatrix}f & 0 & p_x & 0 \\ 0 & f & p_y & 0 \\ 0 & 0 & 1 & 0\end{pmatrix} \begin{pmatrix} X \\ Y \\ Z \\ W \end{pmatrix} = \begin{pmatrix} f X + p_x Z \\ f Y + p_y Z \\ Z \end{pmatrix} \hat{=} \begin{pmatrix} f \frac X Z + p_x \\ f \frac Y Z + p_y \end{pmatrix} =: \begin{pmatrix} x \\ y \end{pmatrix}\]
+
+						\[\begin{pmatrix}f + \Delta f & 0 & p_x & 0 \\ 0 & f + \Delta f & p_y & 0 \\ 0 & 0 & 1 & 0\end{pmatrix} \begin{pmatrix} X \\ Y \\ Z \\ W \end{pmatrix} =\]
+						\[\begin{pmatrix} (f + \Delta f) X + p_x Z \\ (f + \Delta f) Y + p_y Z \\ Z \end{pmatrix} \hat{=} \begin{pmatrix} (f + \Delta f) \frac X Z + p_x \\ (f + \Delta f) \frac Y Z + p_y \end{pmatrix} =: \begin{pmatrix} x\prime \\ y \prime\end{pmatrix}\]
+					</section>
+
+					<section>
+						<h2>Aufgabe 6.2.3</h2>
+
+						\[x = f \frac X Z + p_x\]
+						
+						\[x\prime = (f + \Delta f) \frac X Z + p_x\]
+
+						\[= \underbrace{f \frac X Z + p_x}_{x} + \Delta f \frac X Z = x + \underbrace{k}_{:= \frac{\Delta f}f} f  \frac X Z  \]
+
+						\[= x + k \underbrace{(x - p_x)}_{f \frac X Z + p_x - p_x} = x + k (x - x_0)\]
+					</section>
+					<section style="font-size: 0.6em">
+						<h2>Aufgabe 6.2.3 (Zusatz)</h2>
+
+						\[x\prime = f \frac X {Z + \Delta t}+ p_x = \underbrace{f \frac{X}{Z}}_{= x - x_0} \frac{Z}{Z + \Delta t} + p_x\]
+						\[= \frac{Z + \Delta t - \Delta t}{Z + \Delta t} \left(f \frac X Z\right) + p_x = \underbrace{\frac{Z + \Delta t}{Z + \Delta t}}_1 \left(f \frac X Z\right) - \frac{\Delta t}{Z + \Delta t} \left(f \frac X Z\right) + p_x\]
+
+						\[= x  \underbrace{ - \frac{\Delta t}{Z + \Delta t}}_{=: k} \left(f \frac X Z \right) = x + k (x - x_0)\]
+					</section>
+					<section>
+						<h2>Aufgabe 6.2.3</h2>
+
+						Geometrisch:
+					</section>
+
+				</section>
+				<section style="font-size: 0.6em">
+					<h2>6.3 Bildrepräsentation</h2>
+
+					<table style="width: 110%">
+						<tr>
+							<td></td>
+							<td>
+								Quadratisch
+							</td>
+							<td>Hexagonal</td>
+							<td>Dreieckig</td>
+						</tr>
+						<tr>
+							<td>Nachbarschaft & Darstellbare Linien</td>
+							<td>
+								<img height="100" src="./img/quadrat.svg"/>
+								<img height="100" src="./img/richtungQuadrat.svg"/>
+							</td>
+
+							<td>
+								<img  height="100" src="./img/hexagon.svg"/>
+								<img height="100" src="./img/richtungHexagon.svg"/>
+							</td>
+
+							<td>
+								<img  height="100" src="./img/dreieck.svg"/>
+								<img height="100" src="./img/richtungDreieck.svg"/>
+							</td>
+						</tr>
+						<tr>
+							<td>Vorteile</td>
+							<td><ul>
+									<li>Sensorelemente quadratisch</li>
+									<li>Adressierung klar</li>
+									<li>Bild ist rechteckig, Kanten genau definierbar, kann mit den Pixeln ausgefüllt werden</li>
+									<li>Eindeutige Abbildung auf math. Konzept von Matrizen</li>
+								</ul></td>
+							<td>
+								Nachbarschaftsbeziehung eindeutig
+							</td>
+							<td>
+								-
+							</td>
+						</tr>
+						<tr>
+							<td>Nachteile</td>
+							<td>keine eindeutige Nachbarschaftsbeziehung <br>$\Rightarrow$ zusammenhängende Regionen nicht eindeutig def.</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+
+					</table>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal_new.js"></script>
+		<script src="plugin/math/math_new.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+		
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: false,
+				backgroundTransition: 'none',	
+				autoPlayMedia: false,	
+				controls: true,
+				katex: {
+					version: 'latest',
+					delimiters: [
+					  {left: '$$', right: '$$', display: true},
+					  {left: '$', right: '$', display: false},
+					  {left: '\\(', right: '\\)', display: false},
+					  {left: '\\[', right: '\\]', display: true}
+				   ],
+				   ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+				 
+				},
+				// Learn about plugins: https://revealjs.com/plugins
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script src="js/video_slide.js"></script>
+	</body>
+</html>
